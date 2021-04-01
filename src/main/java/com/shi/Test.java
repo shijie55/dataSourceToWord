@@ -23,17 +23,22 @@ public class Test {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         //documentGeneration("C:\\Users\\史杰\\Desktop\\test");
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.2.81:3306/ebmp_equipment_management", "ebmp_equipment_management", "123456789");
-
-        List<Map<String, Object>> tableList = getTableList(conn,"ebmp_equipment_management");
+       Class.forName("com.mysql.cj.jdbc.Driver");
+        //Class.forName("oracle.jdbc.driver.OracleDriver");
+        // jdbc:oracle:thin:@127.0.0.1:1521:DataBaseName
+        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.0.208:3306/ebmp_invest_sc", "ebmp_invest_sc", "123456789");
+        // todo oracle
+        // oracle 还未实现 select * from user_tab_columns -- 查询表字段和字段类型信息
+        // select * from user_col_comments where Table_Name='xxx' -- 查询字段注释
+        // Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.0.49:1521:orcl", "pi", "pi");
+        List<Map<String, Object>> tableList = getTableList(conn,"ebmp_invest_sc");
         conn.close();
 
         FtUtil ftUtil = new FtUtil();
         Map<String, List> map = new HashMap<>(15);
         map.put("table", tableList);
 
-        ftUtil.generateFile("/", "moban.xml", map, "E:\\test", "test.doc");
+        ftUtil.generateFile("/", "moban.xml", map, "E:\\test", "ebmp_invest_sc.doc");
 
     }
 
